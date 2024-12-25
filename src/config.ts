@@ -20,6 +20,8 @@ const config = {
     email: "ayush1337@hotmail.com",
     phone: "+918810289569",
     youtube: "https://www.youtube.com/@ayush-that",
+    twitter: "https://x.com/shydev69",
+    buymeacoffee: "https://buymeacoffee.com/shydev69",
   },
 
   auth: {
