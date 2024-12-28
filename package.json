@@ -8,7 +8,7 @@
     "dev:next": "next dev",
     "build:next": "next build",
     "dev": "run-p dev:*",
-    "build": "npm install --legacy-peer-deps && run-s build:*",
+    "build": "npx prisma generate && velite --clean && next build",
     "start": "next start",
     "upgrade:latest": "yarn upgrade-interactive --latest",
     "postinstall": "prisma generate"

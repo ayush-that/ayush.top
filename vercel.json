@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build:content && npm run build:next",
+  "buildCommand": "npm run build",
   "installCommand": "npm install",
   "framework": "nextjs"
 }
