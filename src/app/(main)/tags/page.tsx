@@ -1,58 +1,61 @@
-import {Post, posts} from '#site/content'
-import {CustomLink} from '~/components/mdx'
-import {PostList} from '~/components/post'
-import {Tag} from '~/components/tags'
-import config from '~/config'
-import {getSEOTags} from '~/lib/seo'
-import {getAllTags, sortedTagsCount} from '~/lib/utils'
+import { Post, posts } from "~/content";
+import { CustomLink } from "~/components/mdx";
+import { PostList } from "~/components/post";
+import { Tag } from "~/components/tags";
+import config from "~/config";
+import { getSEOTags } from "~/lib/seo";
+import { getAllTags, sortedTagsCount } from "~/lib/utils";
 
 export const metadata: ReturnType<typeof getSEOTags> = getSEOTags({
   title: `All Tags - ${config.appName}`,
-  canonicalUrlRelative: '/tags',
-})
+  canonicalUrlRelative: "/tags",
+});
 
-type OrganizedPost = Record<string, Post[]>
+type OrganizedPost = Record<string, Post[]>;
 
 const TagsPage = () => {
-  const tags = getAllTags(posts)
-  const sortedTags = sortedTagsCount(tags)
+  const tags = getAllTags(posts);
+  const sortedTags = sortedTagsCount(tags);
 
   function organizePostsByTag(posts: Post[]): OrganizedPost {
-    const organizedPosts: {[key: string]: Post[]} = {}
+    const organizedPosts: { [key: string]: Post[] } = {};
 
-    posts.forEach(post => {
-      post.tags.forEach(tag => {
+    posts.forEach((post) => {
+      post.tags.forEach((tag) => {
         if (!organizedPosts[tag]) {
-          organizedPosts[tag] = []
+          organizedPosts[tag] = [];
         }
-        organizedPosts[tag].push(post)
-      })
-    })
+        organizedPosts[tag].push(post);
+      });
+    });
 
-    const sortedKeys = Object.keys(organizedPosts).sort()
-    const result: OrganizedPost = {}
+    const sortedKeys = Object.keys(organizedPosts).sort();
+    const result: OrganizedPost = {};
 
-    sortedKeys.forEach(key => {
-      result[key] = organizedPosts[key]
-    })
+    sortedKeys.forEach((key) => {
+      result[key] = organizedPosts[key];
+    });
 
-    return result
+    return result;
   }
 
-  const result: OrganizedPost = organizePostsByTag(posts)
+  const result: OrganizedPost = organizePostsByTag(posts);
 
   return (
     <div className="grid md:grid-cols-3 gap-4 !mt-8 items-start">
       <main id="main-content" className="md:col-span-2 order-2 md:order-1">
         <h3 className="mb-4 text-lg font-medium">Posts by Tag (A-Z)</h3>
 
-        {Object.keys(result).map(tag => (
+        {Object.keys(result).map((tag) => (
           <section
             key={tag}
             aria-labelledby={`posts-by-tag ${tag}-title`}
             className="space-y-2 border-b last:border-none pb-4 mb-4"
           >
-            <h3 id={`${tag}-title`} className="text-base font-medium capitalize">
+            <h3
+              id={`${tag}-title`}
+              className="text-base font-medium capitalize"
+            >
               {tag}
             </h3>
 
@@ -78,7 +81,7 @@ const TagsPage = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TagsPage
+export default TagsPage;
