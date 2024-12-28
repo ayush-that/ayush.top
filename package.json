@@ -8,10 +8,9 @@
     "dev:next": "next dev",
     "build:next": "next build",
     "dev": "run-p dev:*",
-    "build": "npx prisma generate && velite --clean && next build",
+    "build": "next build",
     "start": "next start",
-    "upgrade:latest": "yarn upgrade-interactive --latest",
-    "postinstall": "prisma generate"
+    "upgrade:latest": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
     "@giscus/react": "^3.0.0",
