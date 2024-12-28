@@ -4,6 +4,15 @@ import { getSEOTags, renderSchemaTags } from "~/lib/seo";
 import { cn } from "~/lib/utils";
 import RootProviders from "~/providers";
 import "~/styles/globals.css";
+import Script from "next/script";
+import { GA_MEASUREMENT_ID } from "~/lib/gtag";
+import { GoogleAnalytics } from "~/components/analytics";
+
+declare global {
+  interface Window {
+    gtag: (command: string, ...args: any[]) => void;
+  }
+}
 
 export const viewport = {
   viewportFit: "cover",
@@ -26,6 +35,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -35,7 +62,7 @@ export default function RootLayout({
         )}
       >
         {renderSchemaTags()}
-
+        {GA_MEASUREMENT_ID && <GoogleAnalytics />}
         <RootProviders>{children}</RootProviders>
 
         {process.env.NODE_ENV === "production" && <Analytics />}
