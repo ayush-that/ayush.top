@@ -1,10 +1,5 @@
 {
   "buildCommand": "npm run build:content && npm run build:next",
   "installCommand": "npm install",
-  "framework": "nextjs",
-  "build": {
-    "env": {
-      "NODE_OPTIONS": "--max-old-space-size=4096"
-    }
-  }
+  "framework": "nextjs"
 }
